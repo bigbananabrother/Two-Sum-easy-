@@ -1,0 +1,45 @@
+
+    bool ComparePair(const pair<int,int> &a, const pair<int,int> &b){
+        return (a.first < b.first);
+    }
+    bool ComparePair2(const pair<int,int> &a, const int &b){
+        return (a.first < b);
+    }
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int number_to_find = 0;
+        vector<pair<int,int>> sorted_nums;
+        vector<int> return_value;
+        vector<pair<int,int>>::iterator it;
+        
+        for (int a=0; a<nums.size(); a++)
+            sorted_nums.push_back(make_pair(nums[a],a));
+        
+        sort(sorted_nums.begin(), sorted_nums.end(), ComparePair);
+        for (auto &i : sorted_nums)
+            cout << "sorted_nums :" << i.first << ", " << i.second << endl;
+        
+        for (auto &i : sorted_nums)
+        {
+            number_to_find = target - i.first;
+            it = lower_bound(sorted_nums.begin(), sorted_nums.end(), number_to_find, ComparePair2);
+            if (it != sorted_nums.end())
+            {
+                cout << "number to find :" << number_to_find << ", it->first:" << it->first << endl;
+
+                if (number_to_find == i.first)
+                  it++;
+
+                if (number_to_find == it->first)
+                {
+                    return_value.push_back(i.second);
+                    return_value.push_back(it->second);
+                    return return_value;
+                }
+            }
+        }
+        return return_value;
+    }
+};
