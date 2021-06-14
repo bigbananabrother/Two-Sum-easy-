@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int number_to_find = 0;
+        unordered_map<int, int> cache;
+        vector<int> return_value;
+        
+        for (int i=0; i<nums.size(); i++)
+        {
+            number_to_find = target - nums[i];
+            auto it = cache.find(number_to_find);
+            if (it != cache.end())
+            {
+                return_value.push_back(i);
+                return_value.push_back(it->second);
+                return return_value;
+            }else{
+                cache.insert(make_pair(nums[i], i));
+            }
+        }
+        return return_value;
+    }
+};
